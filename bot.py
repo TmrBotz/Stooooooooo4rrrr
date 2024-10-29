@@ -1,5 +1,13 @@
+import logging
 from telegram import Update
 from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, filters, CallbackContext
+
+# Set up logging
+logging.basicConfig(format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+def start(update: Update, context: CallbackContext) -> None:
+    update.message.reply_text('Welcome! Please upload a file using /upload.')
 
 def upload(update: Update, context: CallbackContext) -> None:
     if update.message is None or update.message.document is None:
@@ -16,11 +24,8 @@ def upload(update: Update, context: CallbackContext) -> None:
     blogspot_link = f"https://teraboxtoplayer.blogspot.com/2024/10/redirecting-to-your-link-code-credit.html?redirect={unique_link}"
     update.message.reply_text(f'Your file has been uploaded! You can download it [here]({blogspot_link}).', parse_mode='Markdown')
 
-    else:
-        update.message.reply_text('Please upload a valid file.')
-
 def main() -> None:
-    application = ApplicationBuilder().token("7156757667:AAGZRdBHCsQxR-fU4VlofUeFS-ozdSAk0CY").build()  # Updated initialization
+    application = ApplicationBuilder().token("7156757667:AAGZRdBHCsQxR-fU4VlofUeFS-ozdSAk0CY").build()  # Update with your bot token
 
     application.add_handler(CommandHandler("start", start))
     application.add_handler(MessageHandler(filters.Document.ALL, upload))  # Updated filter
