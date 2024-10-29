@@ -9,8 +9,12 @@ def upload(update: Update, context: CallbackContext) -> None:
         file_id = update.message.document.file_id
         new_file = context.bot.get_file(file_id)
         
-        # Generate a unique link (you can replace this with your actual file storage logic)
-        unique_link = f"https://t.me/TMR_File_Storee_bot?start{file_id}"
+        # Forward the file to the desired channel
+        channel_id = '-1002064680981'  # Replace with your channel username or ID
+        message = context.bot.forward_message(chat_id=channel_id, from_chat_id=update.message.chat_id, message_id=update.message.message_id)
+
+        # Generate a unique link for the forwarded message
+        unique_link = f"https://t.me/{channel_id}/{message.message_id}"
 
         # Generate Blogspot link
         blogspot_link = f"https://teraboxtoplayer.blogspot.com/2024/10/redirecting-to-your-link-code-credit.html?redirect={unique_link}"
@@ -22,7 +26,7 @@ def main() -> None:
     updater = Updater("7156757667:AAGZRdBHCsQxR-fU4VlofUeFS-ozdSAk0CY")  # Replace with your bot token
 
     updater.dispatcher.add_handler(CommandHandler("start", start))
-    updater.dispatcher.add_handler(CommandHandler("upload", upload))
+    updater.dispatcher.add_handler(MessageHandler(Filters.document, upload))
 
     # Start the bot
     updater.start_polling()
@@ -30,4 +34,3 @@ def main() -> None:
 
 if __name__ == '__main__':
     main()
-      
