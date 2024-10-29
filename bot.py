@@ -25,7 +25,7 @@ async def upload(update: Update, context: CallbackContext) -> None:
     await update.message.reply_text(f'Your file has been uploaded! You can download it [here]({blogspot_link}).', parse_mode='Markdown')  # Add await here
 
 def main() -> None:
-    application = ApplicationBuilder().token("7156757667:AAGZRdBHCsQxR-fU4VlofUeFS-ozdSAk0CY").build()  # Update with your bot token
+    application = ApplicationBuilder().token("7156757667:AAELbKDvIsZZO4Z2Byd0fECdPAbgE-uG-FU").build()  # Update with your bot token
 
     application.add_handler(CommandHandler("start", start))
     application.add_handler(MessageHandler(filters.Document.ALL, upload))  # Updated filter
