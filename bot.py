@@ -1,6 +1,5 @@
 from telegram import Update
-from telegram.ext import Updater, CommandHandler, MessageHandler, CallbackContext
-from telegram.ext.filters import Document  # Updated import
+from telegram.ext import ApplicationBuilder, CommandHandler, MessageHandler, filters, CallbackContext
 
 def start(update: Update, context: CallbackContext) -> None:
     update.message.reply_text('Welcome! Please upload a file using /upload.')
@@ -10,7 +9,7 @@ def upload(update: Update, context: CallbackContext) -> None:
         file_id = update.message.document.file_id
         new_file = context.bot.get_file(file_id)
         
-        channel_id = '@YourChannelUsername'  # Replace with your channel username or ID
+        channel_id = '-1002064680981'  # Replace with your channel username or ID
         message = context.bot.forward_message(chat_id=channel_id, from_chat_id=update.message.chat_id, message_id=update.message.message_id)
 
         unique_link = f"https://t.me/{channel_id}/{message.message_id}"
@@ -20,14 +19,13 @@ def upload(update: Update, context: CallbackContext) -> None:
         update.message.reply_text('Please upload a valid file.')
 
 def main() -> None:
-    updater = Updater("7156757667:AAGZRdBHCsQxR-fU4VlofUeFS-ozdSAk0CY")  # Replace with your bot token
+    application = ApplicationBuilder().token("7156757667:AAGZRdBHCsQxR-fU4VlofUeFS-ozdSAk0CY").build()  # Updated initialization
 
-    updater.dispatcher.add_handler(CommandHandler("start", start))
-    updater.dispatcher.add_handler(MessageHandler(Document.ALL, upload))  # Updated filter
+    application.add_handler(CommandHandler("start", start))
+    application.add_handler(MessageHandler(filters.Document.ALL, upload))  # Updated filter
 
-    updater.start_polling()
-    updater.idle()
+    application.run_polling()
 
 if __name__ == '__main__':
     main()
-        
+    
