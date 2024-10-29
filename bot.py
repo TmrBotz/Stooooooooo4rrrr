@@ -10,7 +10,7 @@ def upload(update: Update, context: CallbackContext) -> None:
         new_file = context.bot.get_file(file_id)
         
         # Generate a unique link (you can replace this with your actual file storage logic)
-        unique_link = f"https://your_file_storage_service.com/{file_id}"
+        unique_link = f"https://t.me/TMR_File_Storee_bot?start{file_id}"
 
         # Generate Blogspot link
         blogspot_link = f"https://yourblog.blogspot.com/your_post?redirect={unique_link}"
